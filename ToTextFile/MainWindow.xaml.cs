@@ -29,11 +29,25 @@ namespace ToTextFile
 
         StringBuilder sb_data = new();
         StringBuilder sb_data_lower = new();
+        int Qcount = 0;
+
+        private int QNo = 0;
+
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if (Qcount>40)
+                {
+                    MessageBoxResult result =  MessageBox.Show("40 Questions are already added, Do you still want to add more?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+                    if (result == MessageBoxResult.No)
+                        return;
+
+                }
+
                 if (Validation())
                 {
                     sb_data.AppendLine(txtQuestion.Text.ToUpper().Trim('?',' '));
@@ -43,9 +57,9 @@ namespace ToTextFile
                     sb_data.AppendLine("C. " + Op3.Text.ToUpper().Trim());
                     sb_data.AppendLine("D. " + Op4.Text.ToUpper().Trim());
 
-                    sb_data.AppendLine("ANSWER: " + Op4.Text.ToUpper() + Environment.NewLine);
+                    sb_data.AppendLine("ANSWER: " + Ans.Text.ToUpper() + Environment.NewLine);
 
-                    sb_data_lower.AppendLine(txtQuestion.Text);
+                    sb_data_lower.AppendLine(++Qcount +". "+ txtQuestion.Text);
 
                     sb_data_lower.AppendLine("A. " + Op1.Text.Trim());
                     sb_data_lower.AppendLine("B. " + Op2.Text.Trim());
@@ -53,10 +67,10 @@ namespace ToTextFile
                     sb_data_lower.AppendLine("D. " + Op4.Text.Trim() + Environment.NewLine);
 
                     //sb_data_lower.AppendLine("ANSWER: " + Op4.Text + Environment.NewLine);
-
+                    lblQcount.Text = "Q. No. " + Qcount; 
                     MessageBox.Show("Question Added Successfully!", "", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    Op1.Text = Op2.Text = Op3.Text = Op4.Text = string.Empty;
+                    Ans.Text=txtQuestion.Text=Op1.Text = Op2.Text = Op3.Text = Op4.Text = string.Empty;
 
                 }
             }
@@ -178,7 +192,8 @@ namespace ToTextFile
                 }
                 sb_data.Clear();
                 sb_data_lower.Clear();
-                Op1.Text = Op2.Text = Op3.Text = Op4.Text = string.Empty;
+                Qcount = 0;
+                Ans.Text = txtQuestion.Text = Op1.Text = Op2.Text = Op3.Text = Op4.Text = string.Empty;
 
                 return true;
             }
@@ -189,5 +204,9 @@ namespace ToTextFile
             }
         }
 
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

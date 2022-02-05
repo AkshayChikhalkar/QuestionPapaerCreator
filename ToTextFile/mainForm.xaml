@@ -1,0 +1,18 @@
+﻿<Window x:Class="ToTextFile.mainForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToTextFile"
+        mc:Ignorable="d"
+        Title="mainForm" Height="343" Width="611">
+    <Grid Margin="0,0,0,-6">
+        <ComboBox x:Name="cb_Subject" HorizontalAlignment="Left" Margin="333,81,0,0" VerticalAlignment="Top" Width="227"/>
+
+        <RadioButton x:Name="rb_Theory" Content="Theory" HorizontalAlignment="Left" Margin="102,85,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <RadioButton Content="Practical" HorizontalAlignment="Left" Margin="203,85,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cb_TestNo" HorizontalAlignment="Left" Margin="102,181,0,0" VerticalAlignment="Top" Width="55"/>
+        <ComboBox x:Name="cb_TestType" HorizontalAlignment="Left" Margin="191,181,0,0" VerticalAlignment="Top" Width="141"/>
+
+    </Grid>
+</Window>
