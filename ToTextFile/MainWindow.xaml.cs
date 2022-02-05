@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +32,6 @@ namespace ToTextFile
         StringBuilder sb_data_lower = new();
         int Qcount = 0;
 
-        private int QNo = 0;
 
 
 
@@ -207,6 +207,51 @@ namespace ToTextFile
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+           this.DragMove();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "Txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+            if ((bool)openFileDialog.ShowDialog())
+            {
+                //Get the path of specified file
+                filePath = openFileDialog.FileName;
+                sb_data.Clear();
+                sb_data_lower.Clear();
+                //Read the contents of the file into a stream
+                var fileStream = openFileDialog.OpenFile();
+                string line;
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line.Contains("ANSWER", StringComparison.Ordinal))
+                        {
+                            sb_data.AppendLine(line);
+                            Qcount++;
+                        }
+                        else
+                        {
+                            sb_data.AppendLine(line);
+                            sb_data_lower.AppendLine(line);
+                        }
+                    }
+                }
+
+                lblQcount.Text = "Q. No. " + Qcount;
+            }
+
         }
     }
 }
